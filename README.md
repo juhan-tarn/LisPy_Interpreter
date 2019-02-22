@@ -1,7 +1,7 @@
 # LisPy_Interpreter <br/>
 
 An interpreter in Python for Lisp. 
-<br/>So far the interpreter can evaluate arithmetic expressions, including nested expressions.
+<br/>So far the interpreter can evaluate _arithmetic expressions, including nested expressions._
 
 This interpreter works in Python 3.4, and it contains regular expression package (regular expression is built-in). If regular expression package cannot be imported, try `pip install regex`
 
