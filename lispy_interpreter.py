@@ -6,27 +6,28 @@ https://github.com/norvig/pytudes/blob/master/py/lispy.py
 '''
 import re
 import function_def
+
 Symbol = str          # A Lisp Symbol is implemented as a Python str
-List = list
-Num = int
+List = list           #A Lisp list is implemented as a Python List
+Num = int             # A Lisp number is implemented as integer
 
  ## evaluation on variables should just be error for now
  ## numbers evaluate to themselves
  ## for list, the first thing is always the funciton
 
 def tokenize(chars):
-    "Convert a string of characters into a list of tokens."
+    "split a string into a list of tokens."
     return chars.replace('(', ' ( ').replace(')', ' ) ').split()
 
 def read_from_tokens(tokens):
-    "Read an expression from a sequence of tokens."
+    "Read a list of tokens and build a tree (nested list) based on the expression."
     if len(tokens) == 0:
         raise SyntaxError('unexpected EOF while reading')
     token = tokens.pop(0)
     if '(' == token:
         L = []
         while tokens[0] != ')':
-            L.append(read_from_tokens(tokens))
+            L.append(read_from_tokens(tokens)) #recursively append lists to a big list --> build a tree
         tokens.pop(0) # pop off ')'
         return L
     elif ')' == token:
@@ -46,14 +47,14 @@ def parse(program):
     return read_from_tokens(tokenize(program))
 
 def is_balanced(input):
-    "Check if an expression has matching parentheses"
+    "Check if an expression has matching parentheses using basic arithmetics"
     sum = 0
     for i in range(len(input)):
         if sum < 0: #ensure that ) doesn't go first
             return False
-        if input[i] == '(':
+        if input[i] == '(': # +1 when see (
             sum = sum + 1
-        elif input[i] == ')':
+        elif input[i] == ')': # -1 when see )
             sum = sum - 1
     if sum == 0:
         return True
@@ -61,19 +62,20 @@ def is_balanced(input):
         return False
 
 def eval(parsed_input):
-    try: return int(parsed_input)
-    except:
-        functions = function_def.dic_function()
+    try:
+        return int(parsed_input) #when the input is a number, i.e. +3 or -3
+    except: #when the input is a list
+        functions = function_def.dic_function() #get the function dictionary
         if parsed_input[0] in functions:
-            Value_ = functions.get(parsed_input[0])
-            nested = parsed_input[1:]
+            func = functions.get(parsed_input[0]) #get the operator and map to its function
+            nested = parsed_input[1:] #save the rest of the list
             for i in range(len(nested)):
-                if(isinstance(nested[i], list)):
-                    element = eval(nested[i])
-                    nested[i] = element
-
-            #print(Value_(nested))
-            return Value_(nested)
+                if(isinstance(nested[i], list)): # if the item is a list
+                    element = eval(nested[i]) #recursively calculate the result of the nested list
+                    nested[i] = element #replace the item with the result
+                    #example: [ [- 1 3] [* 2 2]] --> [ -2 4]
+            #print(func(nested))
+            return func(nested)
 
 def main():
     while True:
@@ -86,7 +88,7 @@ def main():
         if not userInput:
             continue
         if is_balanced(userInput) == False:
-            print("not enough parentheses, try again")
+            print("unmatching pairs of parentheses, try again")
             #raise SyntaxError('unmatching pairs of parentheses')
             continue
         elif is_balanced(userInput) == True:
