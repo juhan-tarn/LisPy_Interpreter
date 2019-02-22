@@ -1,14 +1,19 @@
-#A Clisp interpreter
-#
+
+'''
+Reference: https://github.com/norvig/pytudes/blob/master/py/lis.py
+https://github.com/norvig/pytudes/blob/master/py/lis.py
+https://github.com/norvig/pytudes/blob/master/py/lispy.py
+'''
 import re
 import function_def
 Symbol = str          # A Lisp Symbol is implemented as a Python str
 List = list
 Num = int
 
- ##evaluation on variables should just be error for now
+ ## evaluation on variables should just be error for now
  ## numbers evaluate to themselves
  ## for list, the first thing is always the funciton
+
 def tokenize(chars):
     "Convert a string of characters into a list of tokens."
     return chars.replace('(', ' ( ').replace(')', ' ) ').split()
@@ -31,7 +36,7 @@ def read_from_tokens(tokens):
 
 
 def atom(token):
-    "Numbers become numbers; every other token is a symbol."
+    "Numbers become integers; every other token is a symbol."
     try: return int(token)
     except ValueError:
         return Symbol(token)
