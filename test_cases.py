@@ -4,7 +4,7 @@ Test cases taken from Richard's Java eval file
 import lispy_interpreter as li
 
 
-def arithetic_test():
+def arithmetic_test():
     assert (li.eval(li.parse("(/ 1 2)"))) == 0
     assert (li.eval(li.parse("(+ 1 1)"))) == 2
     assert (li.eval(li.parse("(+ 1 2 3 4)"))) == 10
@@ -20,3 +20,5 @@ def arithetic_test():
     assert (li.eval(li.parse("(* 2 (+ 1 2))"))) == 6
     assert (li.eval(li.parse("(+ (* 1 2) (/ 6 3) +2 -2 )"))) == 4
     #if nothing shows up when running the above test cases, then all test cases are passed
+
+arithmetic_test()    
