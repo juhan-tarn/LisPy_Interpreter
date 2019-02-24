@@ -20,6 +20,8 @@ def tokenize(chars):
     return chars.replace('(', ' ( ').replace(')', ' ) ').split()
 
 def read_from_tokens(tokens):
+    if tokens[0] == '\'': #if get a '
+        return ' '.join(tokens[1:]).upper() #
     "Read a list of tokens and build a tree (nested list) based on the expression."
     if len(tokens) == 0:
         raise SyntaxError('unexpected EOF while reading')
@@ -74,7 +76,6 @@ def eval(parsed_input):
                     element = eval(nested[i]) #recursively calculate the result of the nested list
                     nested[i] = element #replace the item with the result
                     #example: [ [- 1 3] [* 2 2]] --> [ -2 4]
-            #print(func(nested))
             return func(nested)
 
 def main():
@@ -93,7 +94,8 @@ def main():
             continue
         elif is_balanced(userInput) == True:
             #print("enough parentheses")
-            print(eval(parse(userInput)))
+            #print(eval(parse(userInput)))
+            print(parse(userInput))
 
 
 if __name__ == '__main__':

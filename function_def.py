@@ -24,6 +24,8 @@ def divide(int_list):
     '''divides two integers'''
     if len(int_list) == 2:
         return int(int_list[0]/int_list[1])
+    elif int_list[1] == 0:
+        print("Error: Division by zero.")
     else:
         print("too many or not enough arguments")
 
@@ -66,6 +68,8 @@ def is_moreEqual(int_list):
             return False
     else:
         print("too many or not enough argument")
+
+
 
 '''
 TODO:
