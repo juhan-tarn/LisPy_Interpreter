@@ -105,7 +105,10 @@ def main():
         elif is_balanced(userInput) == True:
             #print("enough parentheses")
             print(eval(parse(userInput)))
+<<<<<<< HEAD
             #print(parse(userInput))
+=======
+>>>>>>> 545f3694200c190ab429aafd03bbf227deaf8b14
 
 
 if __name__ == '__main__':
