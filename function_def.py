@@ -79,6 +79,13 @@ PROGN LET SETQ DO
 PRINC TERPRI LOAD QUIT
 '''
 
+'''notes
+(cons 'a 'b) --> Error
+(cons 'a '(b)) --> (A B)
+(cons '(a) '(b)) --> ((A) B)
+
+'''
+
 #dictionary inspiration from: https://stackoverflow.com/questions/9168340/using-a-dictionary-to-select-function-to-execute
 def dic_function():
     dict = {'+': add, '-': subtract, '*': multiply, '/': divide, '<': is_less, '>': is_more, '<=':is_lessEqual, '>=': is_moreEqual}

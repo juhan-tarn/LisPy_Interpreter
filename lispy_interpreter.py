@@ -15,13 +15,21 @@ Num = int             # A Lisp number is implemented as integer
  ## numbers evaluate to themselves
  ## for list, the first thing is always the funciton
 
+def isQuotePunc(input):
+    if '\'' in input:
+        return True
+    return False
+
 def tokenize(chars):
+    if isQuotePunc(chars):
+        return chars.upper()
     "split a string into a list of tokens."
     return chars.replace('(', ' ( ').replace(')', ' ) ').split()
 
 def read_from_tokens(tokens):
-    if tokens[0] == '\'': #if get a '
-        return ' '.join(tokens[1:]).upper() #
+    if isQuotePunc(tokens): #if get a '
+        return tokens
+        #return ' '.join(tokens[1:]).upper() #
     "Read a list of tokens and build a tree (nested list) based on the expression."
     if len(tokens) == 0:
         raise SyntaxError('unexpected EOF while reading')
@@ -67,6 +75,8 @@ def eval(parsed_input):
     try:
         return int(parsed_input) #when the input is a number, i.e. +3 or -3
     except: #when the input is a list
+        if isQuotePunc(parsed_input):
+            return parsed_input.upper()
         functions = function_def.dic_function() #get the function dictionary
         if parsed_input[0] in functions:
             func = functions.get(parsed_input[0]) #get the operator and map to its function
@@ -94,8 +104,8 @@ def main():
             continue
         elif is_balanced(userInput) == True:
             #print("enough parentheses")
-            #print(eval(parse(userInput)))
-            print(parse(userInput))
+            print(eval(parse(userInput)))
+            #print(parse(userInput))
 
 
 if __name__ == '__main__':
