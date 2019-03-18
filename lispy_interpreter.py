@@ -94,8 +94,7 @@ def main():
             continue
         elif is_balanced(userInput) == True:
             #print("enough parentheses")
-            #print(eval(parse(userInput)))
-            print(parse(userInput))
+            print(eval(parse(userInput)))
 
 
 if __name__ == '__main__':
