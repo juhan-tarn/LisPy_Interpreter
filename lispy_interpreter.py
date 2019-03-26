@@ -1,4 +1,5 @@
-
+#''hi --> 'HI
+#(car ''hi) --> QUOTE
 '''
 Reference: https://github.com/norvig/pytudes/blob/master/py/lis.py
 https://github.com/norvig/pytudes/blob/master/py/lis.py
@@ -15,21 +16,26 @@ Num = int             # A Lisp number is implemented as integer
  ## numbers evaluate to themselves
  ## for list, the first thing is always the funciton
 
-def isQuotePunc(input):
-    if '\'' in input:
-        return True
-    return False
+# def isQuotePunc(input): #check if ' exists
+#     if '\'' in input:
+#         return True
+#     return False
+#
+# def isQuote(input): # check if quote exists
+#     if "quote" in input:
+#         return True
+#     return False
+#
+# def quote(input):
+#     return
 
 def tokenize(chars):
-    if isQuotePunc(chars):
-        return chars.upper()
+    if 'QUOTE' in chars.upper():
+        chars = chars.upper()
     "split a string into a list of tokens."
     return chars.replace('(', ' ( ').replace(')', ' ) ').split()
 
 def read_from_tokens(tokens):
-    if isQuotePunc(tokens): #if get a '
-        return tokens
-        #return ' '.join(tokens[1:]).upper() #
     "Read a list of tokens and build a tree (nested list) based on the expression."
     if len(tokens) == 0:
         raise SyntaxError('unexpected EOF while reading')
@@ -44,6 +50,9 @@ def read_from_tokens(tokens):
         raise SyntaxError('unexpected )')
     else:
         return atom(token)
+
+def print_list(parsed_input):
+    return
 
 
 def atom(token):
@@ -75,8 +84,10 @@ def eval(parsed_input):
     try:
         return int(parsed_input) #when the input is a number, i.e. +3 or -3
     except: #when the input is a list
-        if isQuotePunc(parsed_input):
-            return parsed_input.upper()
+        if 'QUOTE' in parsed_input:
+            quote_index = parsed_input.index('QUOTE')
+            parsed_input = parsed_input[(quote_index):]
+
         functions = function_def.dic_function() #get the function dictionary
         if parsed_input[0] in functions:
             func = functions.get(parsed_input[0]) #get the operator and map to its function
@@ -104,12 +115,19 @@ def main():
             continue
         elif is_balanced(userInput) == True:
             #print("enough parentheses")
-            print(eval(parse(userInput)))
-<<<<<<< HEAD
-            #print(parse(userInput))
-=======
->>>>>>> 545f3694200c190ab429aafd03bbf227deaf8b14
+            #print(eval(parse(userInput)))
+            print(read_from_tokens(tokenize(userInput)))
 
+def print_list(parsed_input):
+  output = parsed_input[0]
+  for i in range(1, len(parsed_input)):
+    if(isinstance(parsed_input[i], list)):
+      sub_string = print_list(parsed_input[i])
+      output = output + sub_string 
+    else:
+      output = output + " " + parsed_input[i]
+  return "(" + output + ")"
 
 if __name__ == '__main__':
-    main()
+    list1 = ['QUOTE', ['A', 'B', 'C', ['D', ['E']]]]
+    print(print_list(list1))
