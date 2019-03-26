@@ -123,7 +123,7 @@ def print_list(parsed_input):
   for i in range(1, len(parsed_input)):
     if(isinstance(parsed_input[i], list)):
       sub_string = print_list(parsed_input[i])
-      output = output + sub_string 
+      output = output + " " + sub_string 
     else:
       output = output + " " + parsed_input[i]
   return "(" + output + ")"
