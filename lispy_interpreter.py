@@ -16,19 +16,6 @@ Num = int             # A Lisp number is implemented as integer
  ## numbers evaluate to themselves
  ## for list, the first thing is always the funciton
 
-# def isQuotePunc(input): #check if ' exists
-#     if '\'' in input:
-#         return True
-#     return False
-#
-# def isQuote(input): # check if quote exists
-#     if "quote" in input:
-#         return True
-#     return False
-#
-# def quote(input):
-#     return
-
 def tokenize(chars):
     if 'QUOTE' in chars.upper():
         chars = chars.upper()
@@ -123,7 +110,7 @@ def print_list(parsed_input):
   for i in range(1, len(parsed_input)):
     if(isinstance(parsed_input[i], list)):
       sub_string = print_list(parsed_input[i])
-      output = output + " " + sub_string 
+      output = output + " " + sub_string
     else:
       output = output + " " + parsed_input[i]
   return "(" + output + ")"
