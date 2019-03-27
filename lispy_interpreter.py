@@ -15,6 +15,30 @@ Num = int             # A Lisp number is implemented as integer
  ## evaluation on variables should just be error for now
  ## numbers evaluate to themselves
  ## for list, the first thing is always the funciton
+def quote_list(parsed_input):
+  output = parsed_input[0]
+  for i in range(1, len(parsed_input)):
+    if(isinstance(parsed_input[i], list)):
+      sub_string = quote_list(parsed_input[i])
+      output = output + " " + sub_string
+    else:
+      output = output + " " + parsed_input[i]
+  return "(" + output + ")"
+
+def print_quotelist(parsed_input):
+    temp = str(quote_list(parsed_input))
+    temp = temp[:-1].split()
+    _final = " ".join(temp[1:])
+    print(_final)
+
+# temp = str(print_list(list1))
+# print(temp[:-1].split())
+# temp = temp[:-1].split()
+# print(" ".join(temp[1:]))
+# if 'QUOTE' in parsed_input:
+#     quote_index = parsed_input.index('QUOTE')
+#     parsed_input = parsed_input[(quote_index):]
+#     return print_list(parsed_input)
 
 def tokenize(chars):
     if 'QUOTE' in chars.upper():
@@ -37,10 +61,6 @@ def read_from_tokens(tokens):
         raise SyntaxError('unexpected )')
     else:
         return atom(token)
-
-def print_list(parsed_input):
-    return
-
 
 def atom(token):
     "Numbers become integers; every other token is a symbol."
@@ -71,9 +91,10 @@ def eval(parsed_input):
     try:
         return int(parsed_input) #when the input is a number, i.e. +3 or -3
     except: #when the input is a list
-        if 'QUOTE' in parsed_input:
-            quote_index = parsed_input.index('QUOTE')
-            parsed_input = parsed_input[(quote_index):]
+        # if 'QUOTE' in parsed_input:
+        #     quote_index = parsed_input.index('QUOTE')
+        #     parsed_input = parsed_input[(quote_index):]
+        #     return print_list(parsed_input)
 
         functions = function_def.dic_function() #get the function dictionary
         if parsed_input[0] in functions:
@@ -103,18 +124,16 @@ def main():
         elif is_balanced(userInput) == True:
             #print("enough parentheses")
             #print(eval(parse(userInput)))
-            print(read_from_tokens(tokenize(userInput)))
+            print(eval(parse(userInput)))
 
-def print_list(parsed_input):
-  output = parsed_input[0]
-  for i in range(1, len(parsed_input)):
-    if(isinstance(parsed_input[i], list)):
-      sub_string = print_list(parsed_input[i])
-      output = output + " " + sub_string
-    else:
-      output = output + " " + parsed_input[i]
-  return "(" + output + ")"
 
 if __name__ == '__main__':
-    list1 = ['QUOTE', ['A', 'B', 'C', ['D', ['E']]]]
-    print(print_list(list1))
+    list1 = ['QUOTE', ['A', 'B', 'C', ['D', ['E', 'QUOTE']]]]
+    print_quotelist(list1)
+    # print(list1)
+    # print(print_list(list1))
+    # temp = str(print_list(list1))
+    # print(temp[:-1].split())
+    # temp = temp[:-1].split()
+    # print(" ".join(temp[1:]))
+    # main()
