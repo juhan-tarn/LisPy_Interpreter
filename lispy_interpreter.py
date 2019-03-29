@@ -15,36 +15,26 @@ Num = int             # A Lisp number is implemented as integer
  ## evaluation on variables should just be error for now
  ## numbers evaluate to themselves
  ## for list, the first thing is always the funciton
-def quote_list(parsed_input):
-  output = parsed_input[0]
-  for i in range(1, len(parsed_input)):
-    if(isinstance(parsed_input[i], list)):
-      sub_string = quote_list(parsed_input[i])
-      output = output + " " + sub_string
-    else:
-      output = output + " " + parsed_input[i]
-  return "(" + output + ")"
 
-def print_quotelist(parsed_input):
-    temp = str(quote_list(parsed_input))
-    temp = temp[:-1].split()
-    _final = " ".join(temp[1:])
-    print(_final)
-
-# temp = str(print_list(list1))
-# print(temp[:-1].split())
-# temp = temp[:-1].split()
-# print(" ".join(temp[1:]))
-# if 'QUOTE' in parsed_input:
-#     quote_index = parsed_input.index('QUOTE')
-#     parsed_input = parsed_input[(quote_index):]
-#     return print_list(parsed_input)
 
 def tokenize(chars):
+    "convert chars to uppercase"
     if 'QUOTE' in chars.upper():
         chars = chars.upper()
+    if '\'' in chars: #doesn't handle ''hi
+        chars = convert_quote(chars.upper())
     "split a string into a list of tokens."
     return chars.replace('(', ' ( ').replace(')', ' ) ').split()
+
+def convert_quote(chars):
+    "convert ' to (QUOTE and add ) to the end '"
+    char_list = list(chars)
+    for i in range(len(char_list)):
+        if char_list[i] == '\'':
+            char_list[i] = '(QUOTE '
+            char_list.append(')')
+    a = "".join(char_list)
+    return "".join(char_list)
 
 def read_from_tokens(tokens):
     "Read a list of tokens and build a tree (nested list) based on the expression."
@@ -91,12 +81,17 @@ def eval(parsed_input):
     try:
         return int(parsed_input) #when the input is a number, i.e. +3 or -3
     except: #when the input is a list
-        # if 'QUOTE' in parsed_input:
-        #     quote_index = parsed_input.index('QUOTE')
-        #     parsed_input = parsed_input[(quote_index):]
-        #     return print_list(parsed_input)
+        if not parsed_input:
+            return 'NIL'
+
+        if 'QUOTE' in parsed_input:
+            return print_quotelist(parsed_input)
+
+        if 'NIL' in parsed_input.upper():
+            return 'NIL'
 
         functions = function_def.dic_function() #get the function dictionary
+
         if parsed_input[0] in functions:
             func = functions.get(parsed_input[0]) #get the operator and map to its function
             nested = parsed_input[1:] #save the rest of the list
@@ -106,6 +101,22 @@ def eval(parsed_input):
                     nested[i] = element #replace the item with the result
                     #example: [ [- 1 3] [* 2 2]] --> [ -2 4]
             return func(nested)
+
+def quote_list(parsed_input):
+    output = parsed_input[0]
+    for i in range(1, len(parsed_input)):
+        if(isinstance(parsed_input[i], list)):
+            sub_string = quote_list(parsed_input[i])
+            output = output + " " + sub_string
+        else:
+            output = output + " " + str(parsed_input[i])
+    return "(" + output + ")"
+
+def print_quotelist(parsed_input):
+    temp = str(quote_list(parsed_input))
+    temp = temp[:-1].split()
+    final = " ".join(temp[1:])
+    return final
 
 def main():
     while True:
@@ -128,12 +139,4 @@ def main():
 
 
 if __name__ == '__main__':
-    list1 = ['QUOTE', ['A', 'B', 'C', ['D', ['E', 'QUOTE']]]]
-    print_quotelist(list1)
-    # print(list1)
-    # print(print_list(list1))
-    # temp = str(print_list(list1))
-    # print(temp[:-1].split())
-    # temp = temp[:-1].split()
-    # print(" ".join(temp[1:]))
-    # main()
+    main()

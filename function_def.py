@@ -60,7 +60,7 @@ def is_lessEqual(int_list):
         print("too many or not enough argument")
 
 def is_moreEqual(int_list):
-    '''>='''
+    ''' >= '''
     if len(int_list) == 2:
         if(int_list[0] >= int_list[1]):
             return True
@@ -69,7 +69,22 @@ def is_moreEqual(int_list):
     else:
         print("too many or not enough argument")
 
+def quote_list(parsed_input):
+    output = parsed_input[0]
+    for i in range(1, len(parsed_input)):
+        if(isinstance(parsed_input[i], list)):
+            sub_string = quote_list(parsed_input[i])
+            output = output + " " + sub_string
+        else:
+            output = output + " " + str(parsed_input[i])
+    return "(" + output + ")"
 
+def print_quotelist(parsed_input):
+    temp = str(quote_list(parsed_input))
+    temp = temp[:-1].split()
+    final = " ".join(temp[1:])
+    print("quote_list: ", final)
+    return final
 
 '''
 TODO:
