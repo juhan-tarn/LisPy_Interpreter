@@ -86,6 +86,7 @@ def print_quotelist(parsed_input):
     print("quote_list: ", final)
     return final
 
+
 '''
 TODO:
 EQUAL EVAL APPLY QUOTE FUNCTION IF AND OR NOT DEFUN
