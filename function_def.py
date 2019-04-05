@@ -69,6 +69,10 @@ def is_moreEqual(int_list):
     else:
         print("too many or not enough argument")
 
+def list_(input):
+    return list(input)
+
+
 def quote_list(parsed_input):
     output = parsed_input[0]
     for i in range(1, len(parsed_input)):
@@ -104,5 +108,5 @@ PRINC TERPRI LOAD QUIT
 
 #dictionary inspiration from: https://stackoverflow.com/questions/9168340/using-a-dictionary-to-select-function-to-execute
 def dic_function():
-    dict = {'+': add, '-': subtract, '*': multiply, '/': divide, '<': is_less, '>': is_more, '<=':is_lessEqual, '>=': is_moreEqual}
+    dict = {'+': add, '-': subtract, '*': multiply, '/': divide, '<': is_less, '>': is_more, '<=':is_lessEqual, '>=': is_moreEqual, 'list': list_}
     return dict

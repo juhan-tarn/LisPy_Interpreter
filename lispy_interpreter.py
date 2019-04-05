@@ -22,36 +22,7 @@ def tokenize(chars):
     #    chars = chars.upper()
     "split a string into a list of tokens."
     return chars.replace('(', ' ( ').replace(')', ' ) ').replace('\'', ' \' ').split()
-#'a
-#'(a)
-# def convert_quote(tokens):
-#     if '\'' not in tokens:
-#         return tokens
-#     new_tokens = []
-#     while(tokens):
-#         print("new tokens: ", new_tokens)
-#         token = tokens.pop(0)
-#         if token == '\'':
-#             new_tokens.append('(')
-#             new_tokens.append('QUOTE')
-#             if tokens[0] != '(':
-#                 print("new tokens: ", new_tokens)
-#                 new_tokens.append(tokens.pop(0))
-#                 new_tokens.append(')')
-#             else:
-#                 while(token != ')'):
-#                     convert_quote(tokens)
-#                 new_tokens.append(token)
-#                 new_tokens.append(')')
-#                     print("remain: ", tokens)
-#                     new_tokens.append(tokens.pop(0))
-#                 new_tokens.append(token)
-#                 print("got close param: ", token)
-#                 new_tokens.append(')')
-#                 print("new tokens: ", new_tokens)
-#         else:
-#             new_tokens.append(token)
-#     return new_tokens
+
 
 def convert_quote(tokens):
     if '\'' not in tokens:
@@ -59,35 +30,35 @@ def convert_quote(tokens):
     new_tokens = []
     while(tokens):
         token = tokens.pop(0)
-        print(token)
         if token == '\'':
             new_tokens.append('(')
             new_tokens.append('QUOTE')
-            print("tokens[0]: ", tokens[0])
+            # print("tokens[0]: ", tokens[0])
             if tokens[0] != '(':
                 new_tokens.append(tokens.pop(0))
                 new_tokens.append(')')
             else:
                 token = tokens.pop(0)
                 while(token != ')'):
-                    print("this token: ", token)
-                    print("condition value: ", (token != ')'))
-                    print("remain: ", tokens)
+                    # print("this token: ", token)
+                    # print("condition value: ", (token != ')'))
+                    # print("remain: ", tokens)
                     new_tokens.append(token)
                     token = tokens.pop(0)
-                    print("new tokens: ", new_tokens)
                     #new_tokens.append(token)
                 new_tokens.append(token)
                 new_tokens.append(')')
         else:
             new_tokens.append(token)
+    print(new_tokens)
     return new_tokens
+
+
 
 
 def read_from_tokens(tokens):
     "Read a list of tokens and build a tree (nested list) based on the expression."
     tokens = convert_quote(tokens)
-    print(tokens)
     if len(tokens) == 0:
         raise SyntaxError('unexpected EOF while reading')
     token = tokens.pop(0)
@@ -131,6 +102,7 @@ def is_balanced(input):
 
 
 def eval(parsed_input):
+    print(parsed_input)
     try:
         return int(parsed_input) #when the input is a number, i.e. +3 or -3
     except: #when the input is a list
@@ -145,17 +117,16 @@ def eval(parsed_input):
             if parsed_input.upper() == 'NIL':
                 return "NIL"
 
-        if parsed_input[0] == 'QUOTE' or parsed_input[0] == '\'':
-            for i in parsed_input[0]:
-                if i.isalpha(): #convert to upper case if i is letters
-                    i = i.upper()
-            return str(parsed_input[1]).upper()
+        if parsed_input[0] == 'QUOTE':
+            # for i in parsed_input:
+            #     if i.isalpha(): #convert to upper case if i is letters
+            #         i = i.upper()
+            return parsed_input[1]
 
         #if 'QUOTE' in parsed_input:
             #return parsed_input[1]
             #return quote_list(parsed_input)
             #return print_quotelist(parsed_input)
-        #[+ [- 1 3] [* 2 2]]
         functions = function_def.dic_function() #get the function dictionary
         if parsed_input[0] in functions:
             func = functions.get(parsed_input[0]) #get the operator and map to its function
@@ -218,14 +189,4 @@ def main():
 
 
 if __name__ == '__main__':
-    #print(tokenize("(list '(+ 2 1) (+ 2 1))"))
-    print(tokenize("'(+ 2 1) 'a"))
-    print(convert_quote(tokenize("('(+ 2 1) 'a)")))
-    #print(eval(parse("'a")))
-    #print(parse("(list 'my (+ 2 1))"))
-    #print(convert_quote(tokenize("'(a 2 1)")))
-
-    #print(eval(parse("(quote (+ 2 1))")))
-    #print(convert_quote(tokenize("(list '(+ 2 1) (+ 2 1))")))
-
-    #main()
+    main()
