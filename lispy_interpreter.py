@@ -50,7 +50,6 @@ def convert_quote(tokens):
                 new_tokens.append(')')
         else:
             new_tokens.append(token)
-    print(new_tokens)
     return new_tokens
 
 
@@ -102,7 +101,6 @@ def is_balanced(input):
 
 
 def eval(parsed_input):
-    print(parsed_input)
     try:
         return int(parsed_input) #when the input is a number, i.e. +3 or -3
     except: #when the input is a list
@@ -133,6 +131,7 @@ def eval(parsed_input):
             nested = parsed_input[1:] #save the rest of the list
             for i in range(len(nested)):
                 #if(isinstance(nested[i], list)): # if the item is a list
+                    print("nested[i]: ", nested[i])
                     element = eval(nested[i]) #recursively calculate the result of the nested list
                     nested[i] = element #replace the item with the result
                     #example: [ [- 1 3] [* 2 2]] --> [ -2 4]

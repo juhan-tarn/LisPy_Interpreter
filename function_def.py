@@ -72,6 +72,15 @@ def is_moreEqual(int_list):
 def list_(input):
     return list(input)
 
+def car(input):
+    flat_list = [item for sublist in input for item in sublist]
+    return flat_list[0]
+
+def cdr(input):
+    print("input: ", input)
+    flat_list = [item for sublist in input for item in sublist]
+    return flat_list[1:]
+
 
 def quote_list(parsed_input):
     output = parsed_input[0]
@@ -108,5 +117,5 @@ PRINC TERPRI LOAD QUIT
 
 #dictionary inspiration from: https://stackoverflow.com/questions/9168340/using-a-dictionary-to-select-function-to-execute
 def dic_function():
-    dict = {'+': add, '-': subtract, '*': multiply, '/': divide, '<': is_less, '>': is_more, '<=':is_lessEqual, '>=': is_moreEqual, 'list': list_}
+    dict = {'+': add, '-': subtract, '*': multiply, '/': divide, '<': is_less, '>': is_more, '<=':is_lessEqual, '>=': is_moreEqual, 'list': list_, 'car': car, 'cdr': cdr}
     return dict
