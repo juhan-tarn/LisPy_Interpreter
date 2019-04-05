@@ -22,6 +22,36 @@ def tokenize(chars):
     #    chars = chars.upper()
     "split a string into a list of tokens."
     return chars.replace('(', ' ( ').replace(')', ' ) ').replace('\'', ' \' ').split()
+#'a
+#'(a)
+# def convert_quote(tokens):
+#     if '\'' not in tokens:
+#         return tokens
+#     new_tokens = []
+#     while(tokens):
+#         print("new tokens: ", new_tokens)
+#         token = tokens.pop(0)
+#         if token == '\'':
+#             new_tokens.append('(')
+#             new_tokens.append('QUOTE')
+#             if tokens[0] != '(':
+#                 print("new tokens: ", new_tokens)
+#                 new_tokens.append(tokens.pop(0))
+#                 new_tokens.append(')')
+#             else:
+#                 while(token != ')'):
+#                     convert_quote(tokens)
+#                 new_tokens.append(token)
+#                 new_tokens.append(')')
+#                     print("remain: ", tokens)
+#                     new_tokens.append(tokens.pop(0))
+#                 new_tokens.append(token)
+#                 print("got close param: ", token)
+#                 new_tokens.append(')')
+#                 print("new tokens: ", new_tokens)
+#         else:
+#             new_tokens.append(token)
+#     return new_tokens
 
 def convert_quote(tokens):
     if '\'' not in tokens:
@@ -29,11 +59,25 @@ def convert_quote(tokens):
     new_tokens = []
     while(tokens):
         token = tokens.pop(0)
+        print(token)
         if token == '\'':
             new_tokens.append('(')
             new_tokens.append('QUOTE')
+            print("tokens[0]: ", tokens[0])
             if tokens[0] != '(':
                 new_tokens.append(tokens.pop(0))
+                new_tokens.append(')')
+            else:
+                token = tokens.pop(0)
+                while(token != ')'):
+                    print("this token: ", token)
+                    print("condition value: ", (token != ')'))
+                    print("remain: ", tokens)
+                    new_tokens.append(token)
+                    token = tokens.pop(0)
+                    print("new tokens: ", new_tokens)
+                    #new_tokens.append(token)
+                new_tokens.append(token)
                 new_tokens.append(')')
         else:
             new_tokens.append(token)
@@ -43,6 +87,7 @@ def convert_quote(tokens):
 def read_from_tokens(tokens):
     "Read a list of tokens and build a tree (nested list) based on the expression."
     tokens = convert_quote(tokens)
+    print(tokens)
     if len(tokens) == 0:
         raise SyntaxError('unexpected EOF while reading')
     token = tokens.pop(0)
@@ -104,7 +149,7 @@ def eval(parsed_input):
             for i in parsed_input[0]:
                 if i.isalpha(): #convert to upper case if i is letters
                     i = i.upper()
-            return parsed_input[1]
+            return str(parsed_input[1]).upper()
 
         #if 'QUOTE' in parsed_input:
             #return parsed_input[1]
@@ -173,10 +218,12 @@ def main():
 
 
 if __name__ == '__main__':
-    #print(convert_quote("(list '(+ 2 1) (+ 2 1))"))
-    print(parse("('a 'b)"))
-    print(parse("(list 'my (+ 2 1))"))
-    print(tokenize("'(a 2 1)"))
+    #print(tokenize("(list '(+ 2 1) (+ 2 1))"))
+    print(tokenize("'(+ 2 1) 'a"))
+    print(convert_quote(tokenize("('(+ 2 1) 'a)")))
+    #print(eval(parse("'a")))
+    #print(parse("(list 'my (+ 2 1))"))
+    #print(convert_quote(tokenize("'(a 2 1)")))
 
     #print(eval(parse("(quote (+ 2 1))")))
     #print(convert_quote(tokenize("(list '(+ 2 1) (+ 2 1))")))
