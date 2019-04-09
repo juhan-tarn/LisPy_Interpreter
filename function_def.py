@@ -77,9 +77,26 @@ def car(input):
     return flat_list[0]
 
 def cdr(input):
-    print("input: ", input)
     flat_list = [item for sublist in input for item in sublist]
     return flat_list[1:]
+
+def listp(input): #something is wrong
+    if(isinstance(input, list)):
+        return True
+    return 'NIL'
+
+def cons(input):
+    if len(input) > 2:
+        print("too many arguments")
+    elif input[0] == 'nil' or input[0] == 'NIL':
+        result_list = list(input[1])
+    elif input[1] == 'nil' or input[1] == 'NIL':
+        result_list = list(input[0])
+    else:
+        result_list = input[1]
+        #result_list = list(input[0]) + input[1]
+        result_list.insert(0, input[0])
+    return result_list
 
 
 def quote_list(parsed_input):
@@ -96,7 +113,6 @@ def print_quotelist(parsed_input):
     temp = str(quote_list(parsed_input))
     temp = temp[:-1].split()
     final = " ".join(temp[1:])
-    print("quote_list: ", final)
     return final
 
 
@@ -117,5 +133,5 @@ PRINC TERPRI LOAD QUIT
 
 #dictionary inspiration from: https://stackoverflow.com/questions/9168340/using-a-dictionary-to-select-function-to-execute
 def dic_function():
-    dict = {'+': add, '-': subtract, '*': multiply, '/': divide, '<': is_less, '>': is_more, '<=':is_lessEqual, '>=': is_moreEqual, 'list': list_, 'car': car, 'cdr': cdr}
+    dict = {'+': add, '-': subtract, '*': multiply, '/': divide, '<': is_less, '>': is_more, '<=':is_lessEqual, '>=': is_moreEqual, 'list': list_, 'car': car, 'cdr': cdr, 'listp': listp, 'cons':cons}
     return dict

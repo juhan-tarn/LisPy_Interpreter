@@ -131,7 +131,6 @@ def eval(parsed_input):
             nested = parsed_input[1:] #save the rest of the list
             for i in range(len(nested)):
                 #if(isinstance(nested[i], list)): # if the item is a list
-                    print("nested[i]: ", nested[i])
                     element = eval(nested[i]) #recursively calculate the result of the nested list
                     nested[i] = element #replace the item with the result
                     #example: [ [- 1 3] [* 2 2]] --> [ -2 4]
@@ -188,4 +187,6 @@ def main():
 
 
 if __name__ == '__main__':
+    #print(eval(parse("(cons 'a '(b c d))")))
+    #print(eval("(+ (+ 2 1) (/ 4 2))"))
     main()
