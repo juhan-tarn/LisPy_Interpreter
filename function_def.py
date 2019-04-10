@@ -100,6 +100,13 @@ def cons(input):
 def null(input):
     if input[0] == 'nil' or input[0] == 'NIL' or input[0]==[]:
         return 'T'
+    return 'NIL'
+
+def Not(input):
+    if null(input)=='T':
+        print(null(input))
+        return 'T'
+    return 'NIL'
 
 def quote_list(parsed_input):
     output = parsed_input[0]
@@ -135,5 +142,5 @@ PRINC TERPRI LOAD QUIT
 
 #dictionary inspiration from: https://stackoverflow.com/questions/9168340/using-a-dictionary-to-select-function-to-execute
 def dic_function():
-    dict = {'+': add, '-': subtract, '*': multiply, '/': divide, '<': is_less, '>': is_more, '<=':is_lessEqual, '>=': is_moreEqual, 'list': list_, 'car': car, 'cdr': cdr, 'listp': listp, 'cons':cons, 'null':null}
+    dict = {'+': add, '-': subtract, '*': multiply, '/': divide, '<': is_less, '>': is_more, '<=':is_lessEqual, '>=': is_moreEqual, 'list': list_, 'car': car, 'cdr': cdr, 'listp': listp, 'cons':cons, 'null':null, 'not': Not}
     return dict
