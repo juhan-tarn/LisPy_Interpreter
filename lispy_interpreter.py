@@ -187,6 +187,6 @@ def main():
 
 
 if __name__ == '__main__':
-    #print(eval(parse("'(a b c)")))
+    print(eval(parse("(and t (> 1 2))")))
     #print(eval("(+ (+ 2 1) (/ 4 2))"))
     main()

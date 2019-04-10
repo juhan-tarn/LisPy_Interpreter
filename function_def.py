@@ -80,7 +80,10 @@ def cdr(input):
     return flat_list[1:]
 
 def listp(input): #something is wrong
+    print(input)
     if(isinstance(input, list)):
+        if str(input[0]).isdigit():
+            return 'NIL'
         return 'T'
     return 'NIL'
 
@@ -108,23 +111,24 @@ def Not(input):
         return 'T'
     return 'NIL'
 
-def quote_list(parsed_input):
-    output = parsed_input[0]
-    for i in range(1, len(parsed_input)):
-        if(isinstance(parsed_input[i], list)):
-            sub_string = quote_list(parsed_input[i])
-            output = output + " " + sub_string
+
+def _if(input):
+    if len(input) == 3:
+        if input[0] != 'NIL' :
+            return input[1]
         else:
-            output = output + " " + str(parsed_input[i])
-    return "(" + output + ")"
+            return input[2]
+    elif len(input)== 2:
+        if input[0] == 'T':
+            return input[1]
+        else:
+            return 'NIL'
 
-def print_quotelist(parsed_input):
-    temp = str(quote_list(parsed_input))
-    temp = temp[:-1].split()
-    final = " ".join(temp[1:])
-    return final
-
-
+def _and(input):
+    for i in input:
+        if i == 'NIL':
+            return 'NIL'
+    return input[-1]
 '''
 TODO:
 EQUAL EVAL APPLY QUOTE FUNCTION IF AND OR NOT DEFUN
@@ -142,5 +146,22 @@ PRINC TERPRI LOAD QUIT
 
 #dictionary inspiration from: https://stackoverflow.com/questions/9168340/using-a-dictionary-to-select-function-to-execute
 def dic_function():
-    dict = {'+': add, '-': subtract, '*': multiply, '/': divide, '<': is_less, '>': is_more, '<=':is_lessEqual, '>=': is_moreEqual, 'list': list_, 'car': car, 'cdr': cdr, 'listp': listp, 'cons':cons, 'null':null, 'not': Not}
+    dict = {'+': add, '-': subtract, '*': multiply, '/': divide, '<': is_less, '>': is_more, '<=':is_lessEqual, '>=': is_moreEqual, 'list': list_, 'car': car, 'cdr': cdr, 'listp': listp, 'cons':cons, 'null':null, 'not': Not, 'if':_if, 'and': _and}
     return dict
+
+
+def quote_list(parsed_input):
+    output = parsed_input[0]
+    for i in range(1, len(parsed_input)):
+        if(isinstance(parsed_input[i], list)):
+            sub_string = quote_list(parsed_input[i])
+            output = output + " " + sub_string
+        else:
+            output = output + " " + str(parsed_input[i])
+    return "(" + output + ")"
+
+def print_quotelist(parsed_input):
+    temp = str(quote_list(parsed_input))
+    temp = temp[:-1].split()
+    final = " ".join(temp[1:])
+    return final
