@@ -1,4 +1,3 @@
-
 def add(int_list):
     '''returns the sum of a given integer list'''
     result = int(sum(int_list))
@@ -33,9 +32,9 @@ def is_less(int_list):
     '''<'''
     if len(int_list) == 2:
         if(int_list[0] < int_list[1]):
-            return True
+            return 'T'
         else:
-            return False
+            return 'NIL'
     else:
         print("too many or not enough arguments")
 
@@ -43,9 +42,9 @@ def is_more(int_list):
     '''>'''
     if len(int_list) == 2:
         if(int_list[0] > int_list[1]):
-            return True
+            return 'T'
         else:
-            return False
+            return 'NIL'
     else:
         print("too many or not enough arguments")
 
@@ -53,9 +52,9 @@ def is_lessEqual(int_list):
     '''<='''
     if len(int_list) == 2:
         if(int_list[0] <= int_list[1]):
-            return True
+            return 'T'
         else:
-            return False
+            return 'T'
     else:
         print("too many or not enough argument")
 
@@ -82,7 +81,7 @@ def cdr(input):
 
 def listp(input): #something is wrong
     if(isinstance(input, list)):
-        return True
+        return 'T'
     return 'NIL'
 
 def cons(input):
@@ -98,6 +97,9 @@ def cons(input):
         result_list.insert(0, input[0])
     return result_list
 
+def null(input):
+    if input[0] == 'nil' or input[0] == 'NIL' or input[0]==[]:
+        return 'T'
 
 def quote_list(parsed_input):
     output = parsed_input[0]
@@ -133,5 +135,5 @@ PRINC TERPRI LOAD QUIT
 
 #dictionary inspiration from: https://stackoverflow.com/questions/9168340/using-a-dictionary-to-select-function-to-execute
 def dic_function():
-    dict = {'+': add, '-': subtract, '*': multiply, '/': divide, '<': is_less, '>': is_more, '<=':is_lessEqual, '>=': is_moreEqual, 'list': list_, 'car': car, 'cdr': cdr, 'listp': listp, 'cons':cons}
+    dict = {'+': add, '-': subtract, '*': multiply, '/': divide, '<': is_less, '>': is_more, '<=':is_lessEqual, '>=': is_moreEqual, 'list': list_, 'car': car, 'cdr': cdr, 'listp': listp, 'cons':cons, 'null':null}
     return dict

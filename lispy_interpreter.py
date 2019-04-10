@@ -187,6 +187,6 @@ def main():
 
 
 if __name__ == '__main__':
-    #print(eval(parse("(cons 'a '(b c d))")))
+    #print(eval(parse("'(a b c)")))
     #print(eval("(+ (+ 2 1) (/ 4 2))"))
     main()
