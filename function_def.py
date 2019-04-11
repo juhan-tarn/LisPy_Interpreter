@@ -129,6 +129,15 @@ def _and(input):
         if i == 'NIL':
             return 'NIL'
     return input[-1]
+
+def _or(input):
+    for i in input:
+        if i == 'NIL' or i == 'nil':
+            continue
+        else:
+            return i
+    return 'NIL'
+
 '''
 TODO:
 EQUAL EVAL APPLY QUOTE FUNCTION IF AND OR NOT DEFUN
@@ -146,7 +155,7 @@ PRINC TERPRI LOAD QUIT
 
 #dictionary inspiration from: https://stackoverflow.com/questions/9168340/using-a-dictionary-to-select-function-to-execute
 def dic_function():
-    dict = {'+': add, '-': subtract, '*': multiply, '/': divide, '<': is_less, '>': is_more, '<=':is_lessEqual, '>=': is_moreEqual, 'list': list_, 'car': car, 'cdr': cdr, 'listp': listp, 'cons':cons, 'null':null, 'not': Not, 'if':_if, 'and': _and}
+    dict = {'+': add, '-': subtract, '*': multiply, '/': divide, '<': is_less, '>': is_more, '<=':is_lessEqual, '>=': is_moreEqual, 'list': list_, 'car': car, 'cdr': cdr, 'listp': listp, 'cons':cons, 'null':null, 'not': Not, 'if':_if, 'and': _and, 'or': _or}
     return dict
 
 

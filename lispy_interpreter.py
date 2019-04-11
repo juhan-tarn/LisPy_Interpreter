@@ -121,6 +121,9 @@ def eval(parsed_input):
             #         i = i.upper()
             return parsed_input[1]
 
+        if parsed_input == 't' or parsed_input == 'T':
+            return 'T'
+
         #if 'QUOTE' in parsed_input:
             #return parsed_input[1]
             #return quote_list(parsed_input)
@@ -187,6 +190,6 @@ def main():
 
 
 if __name__ == '__main__':
-    print(eval(parse("(and t (> 1 2))")))
+    print(eval(parse("(or nil (< 1 2))")))
     #print(eval("(+ (+ 2 1) (/ 4 2))"))
     main()
