@@ -138,6 +138,11 @@ def _or(input):
             return i
     return 'NIL'
 
+def progn(input):
+    return input[-1]
+
+
+
 '''
 TODO:
 EQUAL EVAL APPLY QUOTE FUNCTION IF AND OR NOT DEFUN
@@ -155,7 +160,7 @@ PRINC TERPRI LOAD QUIT
 
 #dictionary inspiration from: https://stackoverflow.com/questions/9168340/using-a-dictionary-to-select-function-to-execute
 def dic_function():
-    dict = {'+': add, '-': subtract, '*': multiply, '/': divide, '<': is_less, '>': is_more, '<=':is_lessEqual, '>=': is_moreEqual, 'list': list_, 'car': car, 'cdr': cdr, 'listp': listp, 'cons':cons, 'null':null, 'not': Not, 'if':_if, 'and': _and, 'or': _or}
+    dict = {'+': add, '-': subtract, '*': multiply, '/': divide, '<': is_less, '>': is_more, '<=':is_lessEqual, '>=': is_moreEqual, 'list': list_, 'car': car, 'cdr': cdr, 'listp': listp, 'cons':cons, 'null':null, 'not': Not, 'if':_if, 'and': _and, 'or': _or, 'progn': progn}
     return dict
 
 
