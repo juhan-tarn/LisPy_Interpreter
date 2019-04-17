@@ -23,7 +23,10 @@ def tokenize(chars):
     "split a string into a list of tokens."
     return chars.replace('(', ' ( ').replace(')', ' ) ').replace('\'', ' \' ').split()
 
-
+'''
+use counting, if count is going to be negative, that's where
+the closing parentheses gets added
+'''
 def convert_quote(tokens):
     if '\'' not in tokens:
         return tokens
@@ -51,8 +54,6 @@ def convert_quote(tokens):
         else:
             new_tokens.append(token)
     return new_tokens
-
-
 
 
 def read_from_tokens(tokens):
@@ -119,10 +120,22 @@ def eval(parsed_input):
             # for i in parsed_input:
             #     if i.isalpha(): #convert to upper case if i is letters
             #         i = i.upper()
-            return parsed_input[1]
+            return parsed_input[1] #[1] or [1:]?
 
         if parsed_input == 't' or parsed_input == 'T':
             return 'T'
+
+        if parsed_input[0] == 'if':
+            if(len(parsed_input[1:]))==3:
+                if parsed_input[1] != 'NIL':
+                    return eval(parsed_input[2])
+                else:
+                    return eval(parsed_input[3])
+            elif len(parsed_input[1:]) == 2:
+                if parsed_input[1] != 'NIL':
+                    return eval(parsed_input[2])
+                else:
+                    return 'NIL'
 
         #if 'QUOTE' in parsed_input:
             #return parsed_input[1]
@@ -190,6 +203,14 @@ def main():
 
 
 if __name__ == '__main__':
-    print(eval(parse("(or nil (< 1 2))")))
+    #print(parse("(+ (* 1 3) (+ 2 4))"))
     #print(eval("(+ (+ 2 1) (/ 4 2))"))
     main()
+
+
+
+
+'''
+(let ((x 6)) (setq x 7) (let ((x 8)) (setq x 9) (setq y 10)) (setq y x)) (setq z x)
+['let', [['x', 6]], ['setq', 'x', 7], ['let', [['x', 8]], ['setq', 'x', 9], ['setq', 'y', 10]], ['setq', 'y', 'x']]
+'''

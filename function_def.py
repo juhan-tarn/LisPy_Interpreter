@@ -112,7 +112,7 @@ def Not(input):
     return 'NIL'
 
 
-def _if(input):
+def _if(input): #move out from the function dictionary
     if len(input) == 3:
         if input[0] != 'NIL' :
             return input[1]
@@ -138,18 +138,49 @@ def _or(input):
             return i
     return 'NIL'
 
+def is_equal(input):
+    ''' = for 2 arguments at most'''
+    if(input < 2):
+        print("not enough arguments")
+    else:
+        if input[0] == input[1]:
+            return 'T'
+    return 'NIL'
+
+def is_Equal(input):
+    return
+
+def eval(input):
+    return
+
+def apply(input):
+    return
+
+def function(input):
+    return
+
+def defun(input):
+    return
+
+def let(input):
+    return
+
+def do(input):
+    return
+
+def load(input):
+    return
+
+def _lambda(input):
+    return
+
 def progn(input):
     return input[-1]
 
+def setq(input):
+    return
 
 
-'''
-TODO:
-EQUAL EVAL APPLY QUOTE FUNCTION IF AND OR NOT DEFUN
-LIST CONS CAR CDR LISTP NULL NIL T
-PROGN LET SETQ DO
-PRINC TERPRI LOAD QUIT
-'''
 
 '''notes
 (cons 'a 'b) --> Error
@@ -160,7 +191,11 @@ PRINC TERPRI LOAD QUIT
 
 #dictionary inspiration from: https://stackoverflow.com/questions/9168340/using-a-dictionary-to-select-function-to-execute
 def dic_function():
-    dict = {'+': add, '-': subtract, '*': multiply, '/': divide, '<': is_less, '>': is_more, '<=':is_lessEqual, '>=': is_moreEqual, 'list': list_, 'car': car, 'cdr': cdr, 'listp': listp, 'cons':cons, 'null':null, 'not': Not, 'if':_if, 'and': _and, 'or': _or, 'progn': progn}
+    dict = {'+': add, '-': subtract, '*': multiply,
+    '/': divide, '<': is_less, '>': is_more, '<=':is_lessEqual,
+    '>=': is_moreEqual, 'list': list_, 'car': car, 'cdr': cdr,
+    'listp': listp, 'cons':cons, 'null':null, 'not': Not,
+    'and': _and, 'or': _or, 'progn': progn, '=': is_equal}
     return dict
 
 
