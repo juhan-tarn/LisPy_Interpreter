@@ -148,22 +148,32 @@ def is_equal(input):
     return 'NIL'
 
 def is_Equal(input):
-    return
+    return is_equal(input)
 
-def eval(input):
-    return
+def progn(input):
+    return input[-1]
 
-def apply(input):
-    return
-
-def function(input):
-    return
-
+#what to add to the func dictionary? name:op? should arg be included?
 def defun(input):
+    operation = progn(input)
+    name = input[0]
+    if name not in dict_function:
+        dict_function[name] = operation
+    return name.upper()
+
+#['let', [['x', 1], ['y', 2]], ['+', 'x', 'y']]
+#Q: when to pop it? how to know when to pop
+def let(input):
+    for i in input[0]:
+        local_var = {i[0]:i[1]}
+        local_stack.append(local_var)
     return
 
-def let(input):
-    return
+def print_space():
+    return ' '
+
+def terpri():
+    return '\n'
 
 def do(input):
     return
@@ -174,11 +184,27 @@ def load(input):
 def _lambda(input):
     return
 
-def progn(input):
-    return input[-1]
-
 def setq(input):
     return
+
+def eval(input):
+    return
+
+def apply(input):
+    return
+
+
+
+#dictionary inspiration from: https://stackoverflow.com/questions/9168340/using-a-dictionary-to-select-function-to-execute
+dict_function = {'+': add, '-': subtract, '*': multiply,
+'/': divide, '<': is_less, '>': is_more, '<=':is_lessEqual,
+'>=': is_moreEqual, 'list': list_, 'car': car, 'cdr': cdr,
+'listp': listp, 'cons':cons, 'null':null, 'not': Not,
+'and': _and, 'or': _or, 'progn': progn, '=': is_equal,
+'equal':is_Equal, 'eval':eval, 'print-space':print_space,
+'terpri':terpri}
+
+local_stack = []
 
 
 
@@ -189,14 +215,7 @@ def setq(input):
 
 '''
 
-#dictionary inspiration from: https://stackoverflow.com/questions/9168340/using-a-dictionary-to-select-function-to-execute
-def dic_function():
-    dict = {'+': add, '-': subtract, '*': multiply,
-    '/': divide, '<': is_less, '>': is_more, '<=':is_lessEqual,
-    '>=': is_moreEqual, 'list': list_, 'car': car, 'cdr': cdr,
-    'listp': listp, 'cons':cons, 'null':null, 'not': Not,
-    'and': _and, 'or': _or, 'progn': progn, '=': is_equal}
-    return dict
+
 
 
 def quote_list(parsed_input):

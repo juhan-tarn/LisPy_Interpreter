@@ -7,6 +7,7 @@ https://github.com/norvig/pytudes/blob/master/py/lispy.py
 '''
 import re
 import function_def
+from function_def import dict_function
 
 Symbol = str          # A Lisp Symbol is implemented as a Python str
 List = list           #A Lisp list is implemented as a Python List
@@ -36,24 +37,31 @@ def convert_quote(tokens):
         if token == '\'':
             new_tokens.append('(')
             new_tokens.append('QUOTE')
-            # print("tokens[0]: ", tokens[0])
-            if tokens[0] != '(':
-                new_tokens.append(tokens.pop(0))
-                new_tokens.append(')')
-            else:
-                token = tokens.pop(0)
-                while(token != ')'):
-                    # print("this token: ", token)
-                    # print("condition value: ", (token != ')'))
-                    # print("remain: ", tokens)
-                    new_tokens.append(token)
-                    token = tokens.pop(0)
-                    #new_tokens.append(token)
-                new_tokens.append(token)
-                new_tokens.append(')')
-        else:
-            new_tokens.append(token)
-    return new_tokens
+        #else:
+
+    # while(tokens):
+    #     token = tokens.pop(0)
+    #     if token == '\'':
+    #         new_tokens.append('(')
+    #         new_tokens.append('QUOTE')
+    #         # print("tokens[0]: ", tokens[0])
+    #         if tokens[0] != '(':
+    #             new_tokens.append(tokens.pop(0))
+    #             new_tokens.append(')')
+    #         else:
+    #             token = tokens.pop(0)
+    #             while(token != ')'):
+    #                 # print("this token: ", token)
+    #                 # print("condition value: ", (token != ')'))
+    #                 # print("remain: ", tokens)
+    #                 new_tokens.append(token)
+    #                 token = tokens.pop(0)
+    #                 #new_tokens.append(token)
+    #             new_tokens.append(token)
+    #             new_tokens.append(')')
+    #     else:
+    #         new_tokens.append(token)
+    # return new_tokens
 
 
 def read_from_tokens(tokens):
@@ -141,7 +149,10 @@ def eval(parsed_input):
             #return parsed_input[1]
             #return quote_list(parsed_input)
             #return print_quotelist(parsed_input)
-        functions = function_def.dic_function() #get the function dictionary
+        functions = dict_function #get the function dictionary
+        if parsed_input[0] == 'function':
+            return functions.get(parsed_input[1])
+
         if parsed_input[0] in functions:
             func = functions.get(parsed_input[0]) #get the operator and map to its function
             nested = parsed_input[1:] #save the rest of the list
@@ -201,9 +212,8 @@ def main():
         elif is_balanced(userInput) == True:
             print(eval(parse(userInput))) #create a print function for quote
 
-
 if __name__ == '__main__':
-    #print(parse("(+ (* 1 3) (+ 2 4))"))
+    print(parse("(let ((x 1) (y 2))(+ x y))"))
     #print(eval("(+ (+ 2 1) (/ 4 2))"))
     main()
 
