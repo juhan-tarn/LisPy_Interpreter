@@ -72,14 +72,20 @@ def list_(input):
     return list(input)
 
 def car(input):
+    '''
+    return the first element of the list
+    '''
     flat_list = [item for sublist in input for item in sublist]
     return flat_list[0]
 
 def cdr(input):
+    '''
+    return the list without the first element
+    '''
     flat_list = [item for sublist in input for item in sublist]
     return flat_list[1:]
 
-def listp(input): #something is wrong
+def listp(input):
     print(input)
     if(isinstance(input, list)):
         if str(input[0]).isdigit():
@@ -96,14 +102,15 @@ def cons(input):
         result_list = list(input[0])
     else:
         result_list = input[1]
-        #result_list = list(input[0]) + input[1]
         result_list.insert(0, input[0])
     return result_list
+
 
 def null(input):
     if input[0] == 'nil' or input[0] == 'NIL' or input[0]==[]:
         return 'T'
     return 'NIL'
+
 
 def Not(input):
     if null(input)=='T':
@@ -153,27 +160,47 @@ def is_Equal(input):
 def progn(input):
     return input[-1]
 
-#what to add to the func dictionary? name:op? should arg be included?
+#what to add to the func dictionary? name : op? should args be included?
 def defun(input):
-    operation = progn(input)
+    operation = progn(input) #this is wrong
     name = input[0]
     if name not in dict_function:
         dict_function[name] = operation
     return name.upper()
-
-#['let', [['x', 1], ['y', 2]], ['+', 'x', 'y']]
-#Q: when to pop it? how to know when to pop
-def let(input):
-    for i in input[0]:
-        local_var = {i[0]:i[1]}
-        local_stack.append(local_var)
-    return
 
 def print_space():
     return ' '
 
 def terpri():
     return '\n'
+
+#['let', [['x', 1], ['y', 2]], ['+', 'x', 'y']]
+#Q: when to pop it? how to know when to pop, what should let return?
+def let(input):
+    pop_list = []
+    for i in input[0]:
+        local_var = [i[0], i[1]]
+        local_stack.append(local_var)
+    for i in range(len(input[1:])):
+        for j in range(len(local_stack)):
+            if input[1:][i] == local_stack[j][0]:
+                input[1:][i] = local_stack[j][1]
+            pop_list.append(j)
+    for i in pop_list:
+        local_stack.pop(i)
+    return input[1:]
+
+def evaluation(input):
+    if input[0] in dict_function:
+        func = dict_function.get(input[0])
+        nested = input[1:]
+        for i in range(len(nested)):
+            element = evaluation(nested[i])
+            nested[i] = element
+        return func(nested)
+
+def princ():
+    return 
 
 def do(input):
     return
@@ -202,7 +229,7 @@ dict_function = {'+': add, '-': subtract, '*': multiply,
 'listp': listp, 'cons':cons, 'null':null, 'not': Not,
 'and': _and, 'or': _or, 'progn': progn, '=': is_equal,
 'equal':is_Equal, 'eval':eval, 'print-space':print_space,
-'terpri':terpri}
+'terpri':terpri, 'let':let}
 
 local_stack = []
 

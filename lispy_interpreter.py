@@ -31,14 +31,40 @@ the closing parentheses gets added
 def convert_quote(tokens):
     if '\'' not in tokens:
         return tokens
-    new_tokens = []
-    while(tokens):
-        token = tokens.pop(0)
-        if token == '\'':
-            new_tokens.append('(')
-            new_tokens.append('QUOTE')
-        #else:
+    quote_index = tokens.index('\'')
+    quote_list = tokens[(quote_index+1):]
+    count = 0
+    for i in range(quote_index+1, len(tokens)):
+        if tokens[i] == '(':
+            count += 1
+        if tokens[i] == ')':
+            count -= 1
+        if count == 0:
+            zero = i
+    tokens.insert(zero+1, ')')
+    tokens[quote_index] = '('
+    tokens.insert(quote_index + 1, 'QUOTE')
+    # while(quote_list):
+    #     token = quote_list.pop(0)
+    #     if token == '(':
+    #         new_tokens.append(token)
+    #         count += 1
+    #     if token == ')':
+    #         new_tokens.append(token)
+    #         count += 1
+    #
+    #
+    #
+    #
+    # new_tokens = []
+    # count = 0
+    # while(tokens):
+    #     token = tokens.pop(0)
+    #     if token == '\'':
+    #         new_tokens.append('(')
+    #         new_tokens.append('QUOTE')
 
+    #
     # while(tokens):
     #     token = tokens.pop(0)
     #     if token == '\'':
@@ -51,22 +77,19 @@ def convert_quote(tokens):
     #         else:
     #             token = tokens.pop(0)
     #             while(token != ')'):
-    #                 # print("this token: ", token)
-    #                 # print("condition value: ", (token != ')'))
-    #                 # print("remain: ", tokens)
     #                 new_tokens.append(token)
     #                 token = tokens.pop(0)
-    #                 #new_tokens.append(token)
     #             new_tokens.append(token)
     #             new_tokens.append(')')
     #     else:
     #         new_tokens.append(token)
-    # return new_tokens
+
+    return convert_quote(tokens)
 
 
 def read_from_tokens(tokens):
     "Read a list of tokens and build a tree (nested list) based on the expression."
-    tokens = convert_quote(tokens)
+    #tokens = convert_quote(tokens)
     if len(tokens) == 0:
         raise SyntaxError('unexpected EOF while reading')
     token = tokens.pop(0)
@@ -145,20 +168,19 @@ def eval(parsed_input):
                 else:
                     return 'NIL'
 
-        #if 'QUOTE' in parsed_input:
-            #return parsed_input[1]
-            #return quote_list(parsed_input)
-            #return print_quotelist(parsed_input)
         functions = dict_function #get the function dictionary
         if parsed_input[0] == 'function':
             return functions.get(parsed_input[1])
-
+        print(parsed_input[0])
         if parsed_input[0] in functions:
+            print(parsed_input)
+            print(parsed_input[0])
             func = functions.get(parsed_input[0]) #get the operator and map to its function
             nested = parsed_input[1:] #save the rest of the list
             for i in range(len(nested)):
                 #if(isinstance(nested[i], list)): # if the item is a list
                     element = eval(nested[i]) #recursively calculate the result of the nested list
+                    print(element)
                     nested[i] = element #replace the item with the result
                     #example: [ [- 1 3] [* 2 2]] --> [ -2 4]
             return func(nested)
@@ -213,9 +235,11 @@ def main():
             print(eval(parse(userInput))) #create a print function for quote
 
 if __name__ == '__main__':
-    print(parse("(let ((x 1) (y 2))(+ x y))"))
+    #print(parse("(apply #'+ '(1 2 3))"))
     #print(eval("(+ (+ 2 1) (/ 4 2))"))
-    main()
+    #main()
+    print(tokenize("''(a (b '(c d)))"))
+    print(convert_quote(tokenize("''(a (b '(c d)))")))
 
 
 
