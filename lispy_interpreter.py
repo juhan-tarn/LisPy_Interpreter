@@ -186,7 +186,6 @@ def eval(parsed_input):
                 else:
                     return 'NIL'
         functions = dict_function #get the function dictionary
-        print(parsed_input[0])
         if parsed_input[0] == 'function':
             return functions.get(parsed_input[1])
         if parsed_input[0] in functions:
@@ -250,8 +249,6 @@ def main():
             print(eval(parse(userInput))) #create a print function for quote
 
 if __name__ == '__main__':
-    print(parse("(apply #'+ '(1 2 3))"))
-
     main()
 
 

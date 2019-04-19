@@ -200,6 +200,11 @@ def evaluation(input):
             nested[i] = element
         return func(nested)
 
+def apply(input):
+    print(input)
+    return input[0](input[-1])
+
+
 def princ():
     return
 
@@ -213,14 +218,14 @@ def _lambda(input):
     return
 
 def setq(input):
-    return
+    key = input[0]
+    value = input[1]
+    global_dict[key] = value
+    return value
 
 def eval(input):
     return
 
-def apply(input):
-    print(input)
-    return input[0](input[-1])
 
 
 
@@ -231,7 +236,7 @@ dict_function = {'+': add, '-': subtract, '*': multiply,
 'listp': listp, 'cons':cons, 'null':null, 'not': Not,
 'and': _and, 'or': _or, 'progn': progn, '=': is_equal,
 'equal':is_Equal, 'eval':eval, 'print-space':print_space,
-'terpri':terpri, 'let':let, 'apply':apply}
+'terpri':terpri, 'let':let, 'apply':apply, 'setq':setq}
 
 local_stack = []
 global_dict = {}
