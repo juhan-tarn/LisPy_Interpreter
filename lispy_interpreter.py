@@ -20,8 +20,7 @@ Num = int             # A Lisp number is implemented as integer
 
 def tokenize(chars):
     "convert chars to uppercase"
-    # if 'QUOTE' in chars.upper():
-    #    chars = chars.upper()
+
     "split a string into a list of tokens."
     return chars.replace('(', ' ( ').replace(')', ' ) ').replace('\'', ' \' ').split()
 
@@ -37,11 +36,6 @@ def convert_quote(tokens):  # ' +
         tokens.insert(sharp_index+3, ')')
 
         return tokens
-        # sharp = tokens.index('#')
-        # tokens.remove(tokens[sharp+1])
-        # tokens[sharp] == '('
-        # tokens.insert(sharp+1, 'function')
-        # tokens.insert(sharp+3, ')')
 
     if '\'' not in tokens:
         return tokens
@@ -198,40 +192,6 @@ def eval(parsed_input):
                     #example: [ [- 1 3] [* 2 2]] --> [ -2 4]
             return func(nested)
 
-# def quote_list(parsed_input):
-#     print("in quote_list")
-#     output = parsed_input[0]
-#     for i in range(1, len(parsed_input)):
-#         if(isinstance(parsed_input[i], list)):
-#             sub_string = quote_list(parsed_input[i])
-#             output = output + " " + sub_string
-#         else:
-#             output = output + " " + str(parsed_input[i])
-#     return "(" + output + ")"
-#
-# def print_quotelist(parsed_input):
-#     print("in print_qoutelist")
-#     temp = str(quote_list(parsed_input))
-#     temp = temp[:-1].split()
-#     final = " ".join(temp[1:])
-#     print("final: ", final)
-#     return final
-#
-# def render(eval_result):
-#     if len(eval_result) == 1:
-#         if(eval_result[0].isdigit()):
-#             print(int(eval_result[0]))
-#         else:
-#             result = ''.join(str(eval_result))
-#             print(result)
-#     if 'QUOTE' in eval_result:
-#         print("if has quote")
-#         return print_quotelist(eval_result)
-#     else:
-#         print(eval_result)
-
-
-
 def main():
     while True:
         try:
@@ -250,11 +210,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-
-
-
-
-'''
-(let ((x 6)) (setq x 7) (let ((x 8)) (setq x 9) (setq y 10)) (setq y x)) (setq z x)
-['let', [['x', 6]], ['setq', 'x', 7], ['let', [['x', 8]], ['setq', 'x', 9], ['setq', 'y', 10]], ['setq', 'y', 'x']]
-'''

@@ -204,7 +204,6 @@ def apply(input):
     print(input)
     return input[0](input[-1])
 
-
 def princ():
     return
 
@@ -227,8 +226,6 @@ def eval(input):
     return
 
 
-
-
 #dictionary inspiration from: https://stackoverflow.com/questions/9168340/using-a-dictionary-to-select-function-to-execute
 dict_function = {'+': add, '-': subtract, '*': multiply,
 '/': divide, '<': is_less, '>': is_more, '<=':is_lessEqual,
@@ -240,16 +237,6 @@ dict_function = {'+': add, '-': subtract, '*': multiply,
 
 local_stack = []
 global_dict = {}
-
-
-
-'''notes
-(cons 'a 'b) --> Error
-(cons 'a '(b)) --> (A B)
-(cons '(a) '(b)) --> ((A) B)
-
-'''
-
 
 
 
