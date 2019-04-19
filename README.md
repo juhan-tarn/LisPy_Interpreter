@@ -8,7 +8,7 @@ This interpreter works in Python 3.4, and it contains regular expression package
 To run this interpreter:
 - download Python (preferably version 3.4)
 - download the interpreter files on this github
-- execute `python lispy_interpreter.py` at the path of the files in terminal
+- execute `python3 lispy_interpreter.py` at the path of the files in terminal
    - You'll see `lispy > ` appear!
 - Input `Quit` or `control-C` to terminate the interpreter.
 
