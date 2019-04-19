@@ -21,4 +21,4 @@ def arithmetic_test():
     assert (li.eval(li.parse("(+ (* 1 2) (/ 6 3) +2 -2 )"))) == 4
     #if nothing shows up when running the above test cases, then all test cases are passed
 
-arithmetic_test()    
+arithmetic_test()

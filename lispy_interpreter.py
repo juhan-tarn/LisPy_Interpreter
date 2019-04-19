@@ -170,12 +170,12 @@ def eval(parsed_input):
 
         if parsed_input[0] == 'if':
             if(len(parsed_input[1:]))==3:
-                if parsed_input[1] != 'NIL':
+                if eval(parsed_input[1]) != 'NIL':
                     return eval(parsed_input[2])
                 else:
                     return eval(parsed_input[3])
             elif len(parsed_input[1:]) == 2:
-                if parsed_input[1] != 'NIL':
+                if eval(parsed_input[1]) != 'NIL':
                     return eval(parsed_input[2])
                 else:
                     return 'NIL'

@@ -86,7 +86,6 @@ def cdr(input):
     return flat_list[1:]
 
 def listp(input):
-    print(input)
     if(isinstance(input, list)):
         if str(input[0]).isdigit():
             return 'NIL'
