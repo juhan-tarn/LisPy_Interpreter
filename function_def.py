@@ -219,9 +219,8 @@ def eval(input):
     return
 
 def apply(input):
-    print("input: ", input)
-
-    return input[-1]
+    print(input)
+    return input[0](input[-1])
 
 
 
@@ -235,6 +234,7 @@ dict_function = {'+': add, '-': subtract, '*': multiply,
 'terpri':terpri, 'let':let, 'apply':apply}
 
 local_stack = []
+global_dict = {}
 
 
 
