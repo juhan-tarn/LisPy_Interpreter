@@ -94,6 +94,7 @@ def listp(input):
     return 'NIL'
 
 def cons(input):
+    result_list = []
     if len(input) > 2:
         print("too many arguments")
     elif input[0] == 'nil' or input[0] == 'NIL':
@@ -200,7 +201,7 @@ def evaluation(input):
         return func(nested)
 
 def princ():
-    return 
+    return
 
 def do(input):
     return
@@ -218,7 +219,9 @@ def eval(input):
     return
 
 def apply(input):
-    return
+    print("input: ", input)
+
+    return input[-1]
 
 
 
@@ -229,7 +232,7 @@ dict_function = {'+': add, '-': subtract, '*': multiply,
 'listp': listp, 'cons':cons, 'null':null, 'not': Not,
 'and': _and, 'or': _or, 'progn': progn, '=': is_equal,
 'equal':is_Equal, 'eval':eval, 'print-space':print_space,
-'terpri':terpri, 'let':let}
+'terpri':terpri, 'let':let, 'apply':apply}
 
 local_stack = []
 

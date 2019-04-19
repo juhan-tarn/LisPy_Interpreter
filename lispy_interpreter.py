@@ -13,6 +13,7 @@ Symbol = str          # A Lisp Symbol is implemented as a Python str
 List = list           #A Lisp list is implemented as a Python List
 Num = int             # A Lisp number is implemented as integer
 
+
  ## evaluation on variables should just be error for now
  ## numbers evaluate to themselves
  ## for list, the first thing is always the funciton
@@ -28,10 +29,24 @@ def tokenize(chars):
 use counting, if count is going to be negative, that's where
 the closing parentheses gets added
 '''
-def convert_quote(tokens):
+def convert_quote(tokens):  # ' +
+    if '#' in tokens:
+        sharp_index = int(tokens.index('#'))
+        tokens[sharp_index] = '('
+        tokens[sharp_index+1] = 'function'
+        tokens.insert(sharp_index+3, ')')
+
+        return tokens
+        # sharp = tokens.index('#')
+        # tokens.remove(tokens[sharp+1])
+        # tokens[sharp] == '('
+        # tokens.insert(sharp+1, 'function')
+        # tokens.insert(sharp+3, ')')
+
     if '\'' not in tokens:
         return tokens
-    quote_index = tokens.index('\'')
+    quote_index = tokens.index('\'') #'a
+
     quote_list = tokens[(quote_index+1):]
     count = 0
     for i in range(quote_index+1, len(tokens)):
@@ -41,6 +56,7 @@ def convert_quote(tokens):
             count -= 1
         if count == 0:
             zero = i
+
     tokens.insert(zero+1, ')')
     tokens[quote_index] = '('
     tokens.insert(quote_index + 1, 'QUOTE')
@@ -89,7 +105,9 @@ def convert_quote(tokens):
 
 def read_from_tokens(tokens):
     "Read a list of tokens and build a tree (nested list) based on the expression."
-    #tokens = convert_quote(tokens)
+    #if '#' not in tokens:
+    tokens = convert_quote(tokens)
+
     if len(tokens) == 0:
         raise SyntaxError('unexpected EOF while reading')
     token = tokens.pop(0)
@@ -147,7 +165,7 @@ def eval(parsed_input):
             if parsed_input.upper() == 'NIL':
                 return "NIL"
 
-        if parsed_input[0] == 'QUOTE':
+        if parsed_input[0] == 'quote' or parsed_input[0] == 'QUOTE':
             # for i in parsed_input:
             #     if i.isalpha(): #convert to upper case if i is letters
             #         i = i.upper()
@@ -167,20 +185,16 @@ def eval(parsed_input):
                     return eval(parsed_input[2])
                 else:
                     return 'NIL'
-
         functions = dict_function #get the function dictionary
+        print(parsed_input[0])
         if parsed_input[0] == 'function':
             return functions.get(parsed_input[1])
-        print(parsed_input[0])
         if parsed_input[0] in functions:
-            print(parsed_input)
-            print(parsed_input[0])
             func = functions.get(parsed_input[0]) #get the operator and map to its function
             nested = parsed_input[1:] #save the rest of the list
             for i in range(len(nested)):
                 #if(isinstance(nested[i], list)): # if the item is a list
                     element = eval(nested[i]) #recursively calculate the result of the nested list
-                    print(element)
                     nested[i] = element #replace the item with the result
                     #example: [ [- 1 3] [* 2 2]] --> [ -2 4]
             return func(nested)
@@ -218,10 +232,11 @@ def eval(parsed_input):
 #         print(eval_result)
 
 
+
 def main():
     while True:
         try:
-            userInput = raw_input('lispy >') #raw_input return the input as string
+            userInput = input('lispy >') #raw_input return the input as string
         except EOFError:
             break
         if userInput == "Quit":
@@ -235,11 +250,9 @@ def main():
             print(eval(parse(userInput))) #create a print function for quote
 
 if __name__ == '__main__':
-    #print(parse("(apply #'+ '(1 2 3))"))
-    #print(eval("(+ (+ 2 1) (/ 4 2))"))
-    #main()
-    print(tokenize("''(a (b '(c d)))"))
-    print(convert_quote(tokenize("''(a (b '(c d)))")))
+    print(parse("(apply #'+ '(1 2 3))"))
+
+    main()
 
 
 
